@@ -158,9 +158,9 @@ class BinaryTree:
     def delete(self, chave):
         #Se a árvore contém mais de um nó#
         if self.size> 1:
-            #Procura pelo elemento que será removido
+                #Procura pelo elemento que será removido
             raiz_to_remove = self._get(chave, self.raiz)
-            #se encontrou o elemento
+                #se encontrou o elemento
             if raiz_to_remove:
                 self.remove(raiz_to_remove)#Função remove()#
                 self.size = self.size - 1
@@ -205,31 +205,37 @@ class BinaryTree:
                 corrente_chave.pai.direito = corrente_chave.esquerdo
             else:
             #se não tem filho nem a direita e ne a esquerda é raiz
-                corrente_chave.replace_data(corrente_chave.esquerdo.chave,
+                corrente_chave.atualiza_dados(corrente_chave.esquerdo.chave,
                                             corrente_chave.esquerdo.valor,
                                             corrente_chave.esquerdo.esquerdo,
                                             corrente_chave.esquerdo.direito)
-        else:
+        if corrente_chave.tem_direito():
             #Se o ó corrente é filho a esquerda
             if corrente_chave.e_filho_esquerdo():
-            #corrente a ser removida
+                #corrente a ser removida
                 corrente_chave.direito.pai = corrente_chave.pai
-            #filho direito do nó a ser removido
+                #filho direito do nó a ser removido
                 corrente_chave.pai.esquerdo = corrente_chave.direito
-            #Se o nó corrente é filho a direita
+                #Se o nó corrente é filho a direita
             elif corrente_chave.e_filho_direito():
                 corrente_chave.direito.pai = corrente_chave.pai
                 corrente_chave.pai.direito = corrente_chave.direito
             else:
                 #se não tem filho nem a direita e ne a esquerda é raiz
-                corrente_chave.replace_data(corrente_chave.direito.chave,
+                corrente_chave.atualiza_dados(corrente_chave.direito.chave,
                                             corrente_chave.direito.valor,
                                             corrente_chave.direito.esquerdo,
                                             corrente_chave.direito.direito)
 
         #caso [3]
-    """O TERCEIRO CASO NÃO SERÁ ESCRITO AGORA"""
-    
+        else:
+            sucessor = corrente_chave.direito
+            while sucessor.tem_esquerdo():
+                sucessor = sucessor.esquerdo
+            corrente_chave.chave = sucessor.chave
+            corrente_chave.valor = sucessor.valor
+            self.remove(sucessor)
+            
 """EXEMPLOS DE USO DESTE CÓDIGO"""
 #inserindo elementos 
 arvore = BinaryTree()
@@ -241,6 +247,20 @@ arvore.put(7, "Filho Direito do Filho Esquerdo")
 arvore.put(12, "Filho Esquerdo do Filho Direito")
 arvore.put(18, "Filho Direito do Filho Direito")
 
+
+"""#Buscando Valores"""
+
+print(f"Usando colchetes: {arvore[7]}")#Método[2]
+print(15*"-")
+"""Removendo Valores"""
+print("antes da Remoção")
+arvore.inorder(arvore.raiz)
+print(15*"-")
+print("Removendo o nó com chave 5 (com filhos)...")
+arvore.delete(5)
+print(15*"-")
+print("Depois da remoção")
+arvore.inorder(arvore.raiz)
 #percorrendo a ÁRVORE
 #print("PREORDER")
 #arvore.preorder(arvore.raiz)
@@ -248,18 +268,6 @@ arvore.put(18, "Filho Direito do Filho Direito")
 #arvore.inorder(arvore.raiz)
 #print("POSTORDER")
 #arvore.postorder(arvore.raiz)
-
-"""#Buscando Valores"""
 #chave = 7
 #valor = arvore.get(chave)
 #print(f"Valor associado à chave {chave}: {valor}")#Método[1]
-print(f"Usando colchetes: {arvore[7]}")#Método[2]
-"""Removendo Valores"""
-print("antes da Remoção")
-arvore.inorder(arvore.raiz)
-print(15*"-")
-print("\nRemovendo o nó com chave 5 (com filhos)...")
-arvore.delete(5)
-print(15*"-")
-print("Depois da remoção")
-arvore.inorder(arvore.raiz)
