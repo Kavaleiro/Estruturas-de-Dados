@@ -1,0 +1,4 @@
+desenvolva um sistema de gestão de biblioteca digital que precisa armazenar e recuperar informações sobre livros rapidamente.
+A estratégia para implementar essa funcionalidade é implementar as funções básicas de uma Árvore AVL: inserção, remoção e busca de nós,
+além de garantir o balanceamento da árvore após cada inserção ou remoção. 
+Para simplificar, considere que cada livro no catálogo da biblioteca é identificado por um número único (ID).
